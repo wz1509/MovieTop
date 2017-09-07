@@ -15,7 +15,7 @@ public class TopContract {
     }
 
     public interface Presenter {
-        void getMovieTop(int count, int start);
+        void getMovieTop(int category, int count, int start);
     }
 
 }

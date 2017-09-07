@@ -1,4 +1,4 @@
-package me.jokey.movie.ui;
+package me.jokey.movie.ui.adapter;
 
 import android.content.Context;
 import android.widget.ImageView;
@@ -15,12 +15,12 @@ import me.jokey.movie.model.MovieEntity;
  * Created by wz on 2017/9/6 19:21.
  * desc:
  */
-public class TopAdapter extends BaseQuickAdapter<MovieEntity, BaseViewHolder> {
+public class MovieAdapter extends BaseQuickAdapter<MovieEntity, BaseViewHolder> {
 
     private Context mContext;
 
-    public TopAdapter(Context context) {
-        super(R.layout.item_recycler_top);
+    public MovieAdapter(Context context) {
+        super(R.layout.item_recycler_movie);
         this.mContext = context;
     }
 
@@ -29,9 +29,11 @@ public class TopAdapter extends BaseQuickAdapter<MovieEntity, BaseViewHolder> {
         Glide.with(mContext)
                 .load(item.getImages().getLarge())
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .dontAnimate()
                 .into((ImageView) helper.getView(R.id.item_img));
+        String average = item.getRating().getAverage();
         helper.setText(R.id.item_text, item.getTitle())
-                .setText(R.id.item_average, String.valueOf(item.getRating().getAverage()));
-
+                .setText(R.id.item_average, average)
+                .setVisible(R.id.item_average, !"0".equals(average));
     }
 }

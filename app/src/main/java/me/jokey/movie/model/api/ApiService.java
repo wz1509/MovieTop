@@ -13,8 +13,16 @@ public interface ApiService {
 
     String Base_URL = "http://api.douban.com/";
 
-    @GET("/v2/movie/top250")
+    @GET("v2/movie/in_theaters")
+    Observable<ResponseBody> getMovieOnNow(@Query("count") int count, @Query("start") int start);
+
+    @GET("v2/movie/coming_soon")
+    Observable<ResponseBody> getMovieOnNext(@Query("count") int count, @Query("start") int start);
+
+    @GET("v2/movie/top250")
     Observable<ResponseBody> getMovieTop(@Query("count") int count, @Query("start") int start);
 
+    @GET("v2/movie/top250")
+    Observable<ResponseBody> getMovieNorthAmerica(@Query("count") int count, @Query("start") int start);
 
 }

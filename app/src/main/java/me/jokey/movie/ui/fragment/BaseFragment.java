@@ -18,33 +18,36 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends RxFragment {
 
     private Unbinder mUnBinder;
+    protected View mRootView;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View mRootView = inflater.inflate(getLayoutId(), container, false);
+        if (mRootView == null) mRootView = inflater.inflate(getLayoutId(), container, false);
         ViewGroup parent = (ViewGroup) mRootView.getParent();
-        if (null != parent) {
-            parent.removeView(mRootView);
-        }
+        if (parent != null) parent.removeView(mRootView);
         return mRootView;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mUnBinder = ButterKnife.bind(this, view);
-        initData(view, savedInstanceState);
+        mUnBinder = ButterKnife.bind(this, mRootView);
+        initView(getLayoutInflater(savedInstanceState));
     }
 
     protected abstract int getLayoutId();
 
-    protected abstract void initData(View view, @Nullable Bundle savedInstanceState);
+    protected abstract void initView(LayoutInflater inflater);
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
         if (mUnBinder != null) mUnBinder.unbind();
     }
-
 }
