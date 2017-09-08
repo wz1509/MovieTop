@@ -113,26 +113,10 @@ public class MovieDetailActivity extends MvpActivity<MovieDetailPresenter> imple
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(mCover);
         mTitle.setText(movie.getTitle());
-        String directors = "";
-        for (PersonageEntity entity : movie.getDirectors()) {
-            directors += entity.getName();
-        }
-        mDirectors.setText(getString(R.string.movie_detail_directors, directors));
-        String casts = "";
-        for (PersonageEntity entity : movie.getCasts()) {
-            casts += entity.getName();
-        }
-        mCasts.setText(getString(R.string.movie_detail_casts, casts));
-        String countries = "";
-        for (String str : movie.getCountries()) {
-            countries += str;
-        }
-        mCountries.setText(getString(R.string.movie_detail_countries, countries));
-        String genres = "";
-        for (String str : movie.getGenres()) {
-            genres += str;
-        }
-        mGenres.setText(getString(R.string.movie_detail_genres, genres));
+        mDirectors.setText(getString(R.string.movie_detail_directors, listToString(movie.getDirectors(), '/')));
+        mCasts.setText(getString(R.string.movie_detail_casts, listToString(movie.getCasts(), '/')));
+        mCountries.setText(getString(R.string.movie_detail_countries, listToString(movie.getCountries(), '/')));
+        mGenres.setText(getString(R.string.movie_detail_genres, listToString(movie.getGenres(), '/')));
         float average = movie.getRating().getAverage();
         if (average != 0.0) {
             mRatingBar.setMax(movie.getRating().getMax());
@@ -163,6 +147,20 @@ public class MovieDetailActivity extends MvpActivity<MovieDetailPresenter> imple
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.movie_detail, menu);
         return true;
+    }
+
+    private String listToString(List list, char separator) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            Object object = list.get(i);
+            if (object instanceof String) {
+                sb.append(object).append(separator);
+            } else if (object instanceof PersonageEntity) {
+                PersonageEntity entity = (PersonageEntity) object;
+                sb.append(entity.getName()).append(separator);
+            }
+        }
+        return sb.toString().substring(0, sb.toString().length() - 1);
     }
 
 }
