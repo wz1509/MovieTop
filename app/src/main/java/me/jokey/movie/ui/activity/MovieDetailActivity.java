@@ -150,6 +150,7 @@ public class MovieDetailActivity extends MvpActivity<MovieDetailPresenter> imple
     }
 
     private String listToString(List list, char separator) {
+        if (list == null || list.size() == 0) return null;
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < list.size(); i++) {
             Object object = list.get(i);

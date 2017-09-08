@@ -2,38 +2,36 @@ package me.jokey.movie.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import me.jokey.movie.R;
-import me.jokey.movie.ui.fragment.CategoryFragment;
+import me.jokey.movie.ui.adapter.ViewPagerAdapter;
 import me.jokey.movie.ui.fragment.MovieFragment;
-import me.jokey.movie.util.BottomNavigationViewHelper;
 
 public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.navigation)
-    BottomNavigationView mNavigationView;
+    private List<String> mTitleList = Arrays.asList("正在上映", "即将上映", "Top250");
 
-    private Fragment mCategoryFragment;
+    private List<Fragment> mFragmentList = new ArrayList<Fragment>() {{
+        add(new MovieFragment());
+        add(new MovieFragment());
+        add(new MovieFragment());
+    }};
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = (BottomNavigationView.OnNavigationItemSelectedListener) item -> {
-        switch (item.getItemId()) {
-            case R.id.navigation_movie:
-                addDefaultFragment(0);
-                return true;
-            case R.id.navigation_dashboard:
-                addDefaultFragment(1);
-                return true;
-            case R.id.navigation_notifications:
-                addDefaultFragment(2);
-                return true;
-        }
-        return false;
-    };
+    @BindView(R.id.tabLayout)
+    TabLayout mTabLayout;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.viewPager)
+    ViewPager mViewPager;
 
     @Override
     protected int getLayoutId() {
@@ -42,38 +40,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData(@Nullable Bundle savedInstanceState) {
-        mNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        BottomNavigationViewHelper.disableShiftMode(mNavigationView);
-
-        addDefaultFragment(0);
-    }
-
-    private void addDefaultFragment(int index) {
-        //开启事务
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        hideFragments(fragmentTransaction);
-        switch (index) {
-            case 0:
-                if (mCategoryFragment == null) {
-                    mCategoryFragment = new CategoryFragment();
-                    fragmentTransaction.add(R.id.content, mCategoryFragment);
-                } else  // 如果不为空，则直接将它显示出来
-                    fragmentTransaction.show(mCategoryFragment);
-                break;
-        }
-        fragmentTransaction.commit();
-    }
-
-    private void hideFragments(FragmentTransaction fragmentTransaction) {
-        if (mCategoryFragment != null) fragmentTransaction.hide(mCategoryFragment);
-    }
-
-    @Override
-    public void onAttachFragment(Fragment fragment) {
-        super.onAttachFragment(fragment);
-        if (mCategoryFragment == null && fragment instanceof MovieFragment)
-            mCategoryFragment = fragment;
-
+        mToolbar.setTitle("榜单");
+        setSupportActionBar(mToolbar);
+        mViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), mTitleList, mFragmentList));
+        mViewPager.setCurrentItem(0);
+        mViewPager.setOffscreenPageLimit(mFragmentList.size() - 1);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
 
