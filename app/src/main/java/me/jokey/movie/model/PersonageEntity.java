@@ -1,10 +1,10 @@
 package me.jokey.movie.model;
 
 /**
- * Created by wz on 2017/9/7 15:47.
+ * Created by wz on 2017/9/7 15:46.
  * desc:
  */
-public class DirectorsEntity {
+public class PersonageEntity {
 
     private String alt;
     private AvatarsBean avatars;
@@ -72,6 +72,24 @@ public class DirectorsEntity {
         public void setMedium(String medium) {
             this.medium = medium;
         }
+
+        @Override
+        public String toString() {
+            return "AvatarsBean{" +
+                    "small='" + small + '\'' +
+                    ", large='" + large + '\'' +
+                    ", medium='" + medium + '\'' +
+                    '}';
+        }
     }
 
+    @Override
+    public String toString() {
+        return "PersonageEntity{" +
+                "alt='" + alt + '\'' +
+                ", avatars=" + avatars +
+                ", name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }

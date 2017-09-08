@@ -14,9 +14,10 @@ import java.util.List;
 import butterknife.BindView;
 import me.jokey.movie.R;
 import me.jokey.movie.application.Constant;
-import me.jokey.movie.contract.TopContract;
+import me.jokey.movie.contract.MovieContract;
 import me.jokey.movie.model.MovieEntity;
-import me.jokey.movie.presenter.TopPresenter;
+import me.jokey.movie.presenter.MoviePresenter;
+import me.jokey.movie.ui.activity.MovieDetailActivity;
 import me.jokey.movie.ui.adapter.MovieAdapter;
 import me.jokey.movie.util.LogUtils;
 
@@ -24,7 +25,7 @@ import me.jokey.movie.util.LogUtils;
  * Created by wz on 2017/9/6 17:25.
  * desc:
  */
-public class MovieFragment extends MvpFragment<TopPresenter> implements TopContract.View,
+public class MovieFragment extends MvpFragment<MoviePresenter> implements MovieContract.View,
         SwipeRefreshLayout.OnRefreshListener {
 
     private boolean isFirstVisible = true;
@@ -84,6 +85,14 @@ public class MovieFragment extends MvpFragment<TopPresenter> implements TopContr
                 StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
         mRefreshLayout.setOnRefreshListener(this);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            MovieEntity movie = mAdapter.getItem(position);
+            if (movie != null) {
+                startActivity(MovieDetailActivity.newIntent(getActivity(), movie.getId()));
+            } else {
+                Toast.makeText(getContext(), "movie ID is null", Toast.LENGTH_SHORT).show();
+            }
+        });
         mAdapter.setOnLoadMoreListener(() ->
                 mPresenter.getMovieTop(mCategory, COUNT, mStart), mRecyclerView);
         mErrorView = LayoutInflater.from(getContext())
@@ -148,8 +157,8 @@ public class MovieFragment extends MvpFragment<TopPresenter> implements TopContr
     }
 
     @Override
-    protected TopPresenter createPresenter() {
-        return new TopPresenter();
+    protected MoviePresenter createPresenter() {
+        return new MoviePresenter();
     }
 
 

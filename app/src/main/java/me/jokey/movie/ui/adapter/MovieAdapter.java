@@ -31,9 +31,9 @@ public class MovieAdapter extends BaseQuickAdapter<MovieEntity, BaseViewHolder> 
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .dontAnimate()
                 .into((ImageView) helper.getView(R.id.item_img));
-        String average = item.getRating().getAverage();
+        float average = item.getRating().getAverage();
         helper.setText(R.id.item_text, item.getTitle())
-                .setText(R.id.item_average, average)
-                .setVisible(R.id.item_average, !"0".equals(average));
+                .setText(R.id.item_average, String.valueOf(average))
+                .setVisible(R.id.item_average, average != 0.0);
     }
 }

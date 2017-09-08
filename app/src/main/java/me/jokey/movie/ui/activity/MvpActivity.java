@@ -16,17 +16,17 @@ public abstract class MvpActivity<P extends BasePresenter>  extends BaseActivity
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         mPresenter = createPresenter();
         if (mPresenter != null) mPresenter.attachView(this);
+        super.onCreate(savedInstanceState);
     }
 
     protected abstract P createPresenter();
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (mPresenter != null) mPresenter.detachView();
+        super.onDestroy();
     }
 
     @Override

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import me.jokey.movie.contract.TopContract;
+import me.jokey.movie.contract.MovieContract;
 import me.jokey.movie.model.MovieEntity;
 import me.jokey.movie.model.api.RetrofitClient;
 import me.jokey.movie.model.api.RxSchedulers;
@@ -21,7 +21,7 @@ import okhttp3.ResponseBody;
  * Created by wz on 2017/9/6 19:11.
  * desc:
  */
-public class TopPresenter extends BasePresenter<MovieFragment> implements TopContract.Presenter {
+public class MoviePresenter extends BasePresenter<MovieFragment> implements MovieContract.Presenter {
 
     @Override
     public void getMovieTop(int category, int count, int start) {

@@ -25,9 +25,9 @@ public class MovieEntity {
 
     private List<String> genres;
 
-    private List<CastsEntity> casts;
+    private List<PersonageEntity> casts;
 
-    private List<DirectorsEntity> directors;
+    private List<PersonageEntity> directors;
 
     private ImagesEntity images;
 
@@ -87,19 +87,19 @@ public class MovieEntity {
         this.genres = genres;
     }
 
-    public List<CastsEntity> getCasts() {
+    public List<PersonageEntity> getCasts() {
         return casts;
     }
 
-    public void setCasts(List<CastsEntity> casts) {
+    public void setCasts(List<PersonageEntity> casts) {
         this.casts = casts;
     }
 
-    public List<DirectorsEntity> getDirectors() {
+    public List<PersonageEntity> getDirectors() {
         return directors;
     }
 
-    public void setDirectors(List<DirectorsEntity> directors) {
+    public void setDirectors(List<PersonageEntity> directors) {
         this.directors = directors;
     }
 

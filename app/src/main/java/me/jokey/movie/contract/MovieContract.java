@@ -8,7 +8,7 @@ import me.jokey.movie.model.MovieEntity;
  * Created by wz on 2017/9/6 19:01.
  * desc:
  */
-public class TopContract {
+public class MovieContract {
 
     public interface View {
         void loadMovieTop(List<MovieEntity> list);

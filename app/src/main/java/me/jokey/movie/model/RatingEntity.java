@@ -6,24 +6,24 @@ package me.jokey.movie.model;
  */
 public class RatingEntity {
 
-    private String max;
-    private String average;
+    private int max;
+    private float average;
     private String stars;
     private String min;
 
-    public String getMax() {
+    public int getMax() {
         return max;
     }
 
-    public void setMax(String max) {
+    public void setMax(int max) {
         this.max = max;
     }
 
-    public String getAverage() {
+    public float getAverage() {
         return average;
     }
 
-    public void setAverage(String average) {
+    public void setAverage(float average) {
         this.average = average;
     }
 
